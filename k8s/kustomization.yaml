@@ -16,7 +16,7 @@ resources:
   - ingress.yaml
 
 images:
-  - name: docslot-backend
+  - name: doctor-appointment-booking-backend
     newTag: latest
-  - name: docslot-frontend
+  - name: doctor-appointment-booking-frontend
     newTag: latest

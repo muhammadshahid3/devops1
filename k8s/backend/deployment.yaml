@@ -18,7 +18,7 @@ spec:
           command: ["sh", "-c", "until nc -z db 3306; do echo waiting for db; sleep 2; done"]
       containers:
         - name: backend
-          image: docslot-backend:latest
+          image: doctor-appointment-booking-backend
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
