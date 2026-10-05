@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_USER/YOUR_REPO.git
+    repoURL: https://github.com/muhammadshahid3/devops1
     targetRevision: main
     path: k8s
   destination:
