@@ -1,0 +1,64 @@
+services:
+  # ---------- MySQL database ----------
+  db:
+    image: mysql:8.0
+    container_name: docslot-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: docslot
+      MYSQL_USER: docslot
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    ports:
+      - "3307:3306"   # connect from MySQL Workbench / DBeaver on localhost:3307
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootsecret"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # ---------- Laravel API (http://localhost:8000/api) ----------
+  backend:
+    build: ./backend
+    container_name: docslot-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      APP_TIMEZONE: Asia/Karachi
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: docslot
+      DB_USERNAME: docslot
+      DB_PASSWORD: secret
+      SESSION_DRIVER: array
+      CACHE_STORE: array
+      SEED_DEMO_DATA: "true"   # set to "false" to start with an empty database
+    ports:
+      - "8000:8000"
+
+  # ---------- React app (http://localhost:5173) ----------
+  frontend:
+    build: ./frontend
+    container_name: docslot-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+
+
+volumes:
+  db_data:

@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: docslot
+
+resources:
+  - namespace.yaml
+  - secret.yaml
+  - mysql/deployment.yaml
+  - mysql/service.yaml
+  - backend/configmap.yaml
+  - backend/deployment.yaml
+  - backend/service.yaml
+  - frontend/deployment.yaml
+  - frontend/service.yaml
+  - ingress.yaml
+
+images:
+  - name: docslot-backend
+    newTag: latest
+  - name: docslot-frontend
+    newTag: latest
