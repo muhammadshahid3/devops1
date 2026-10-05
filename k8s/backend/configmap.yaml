@@ -1,3 +1,4 @@
+# DB wali values (host, port, user, password) ab AWS Secrets Manager se aati hain (app-secret)
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,9 +8,6 @@ data:
   APP_DEBUG: "true"
   APP_URL: http://localhost:8000
   APP_TIMEZONE: Asia/Karachi
-  DB_CONNECTION: mysql
-  DB_HOST: db
-  DB_PORT: "3306"
   SESSION_DRIVER: array
   CACHE_STORE: array
   SEED_DEMO_DATA: "true"

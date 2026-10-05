@@ -5,9 +5,7 @@ namespace: docslot
 
 resources:
   - namespace.yaml
-  - secret.yaml
-  - mysql/deployment.yaml
-  - mysql/service.yaml
+  - external-secret.yaml
   - backend/configmap.yaml
   - backend/deployment.yaml
   - backend/service.yaml

@@ -13,9 +13,13 @@ spec:
         app: backend
     spec:
       initContainers:
+        # RDS ready / reachable hone tak intezar
         - name: wait-for-db
           image: busybox:1.36
-          command: ["sh", "-c", "until nc -z db 3306; do echo waiting for db; sleep 2; done"]
+          command: ["sh", "-c", "until nc -z $DB_HOST $DB_PORT; do echo waiting for rds; sleep 2; done"]
+          envFrom:
+            - secretRef:
+                name: app-secret
       containers:
         - name: backend
           image: shahiddevops1/docslot-backend
@@ -25,16 +29,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: backend-config
-          env:
-            - name: DB_DATABASE
-              valueFrom:
-                secretKeyRef: { name: app-secret, key: DB_DATABASE }
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef: { name: app-secret, key: DB_USERNAME }
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef: { name: app-secret, key: DB_PASSWORD }
+            - secretRef:
+                name: app-secret   # DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
           readinessProbe:
             tcpSocket:
               port: 8000
