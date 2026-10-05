@@ -20,4 +20,4 @@ spec:
             - containerPort: 5173
           env:
             - name: VITE_API_URL
-              value: /api
+              value: http://54.89.38.14:8000/api
