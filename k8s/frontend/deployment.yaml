@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: doctor-appointment-booking-frontend
+          image: shahiddevops1/docslot-frontend
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5173
