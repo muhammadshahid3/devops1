@@ -22,7 +22,7 @@ spec:
                 name: app-secret
       containers:
         - name: backend
-          image: shahiddevops1/docslot-backend
+          image: shahiddevops1/doctor-appointment-booking-backend
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
